@@ -6,7 +6,7 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: cosmo
-# runtime: shiny
+    runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
@@ -64,7 +64,7 @@ selectInput("selected_county", "Choose a county:",
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Food Insecurity vs. Supermarket Distance
+## Food Insecurity vs. Supermarket Distance
 
 ```{r}
 renderPlotly({
@@ -90,7 +90,7 @@ renderPlotly({
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Food Access Map
+## Food Access Map
 
 ```{r}
 renderLeaflet({
@@ -121,13 +121,13 @@ The map shows food insecurity levels and supermarket distance for all selected G
 Data Source {.tabset}
 -----------------------------------------------------------------------
 
-### About the Data
+## About the Data
 
 This dashboard uses data from the [USDA Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/), which covers approximately 72,000 U.S. census tracts. The data was collected by the USDA in collaboration with the U.S. Census Bureau and the Department of Transportation. It includes indicators such as distance to supermarkets, vehicle access, food insecurity rates, income levels, and race/ethnicity. This dataset focuses on U.S. residents living in census tracts and is used to identify areas with limited access to healthy food. The data used for this project was last updated in 2019.
 
 Real-World Impact {.tabset}
 -----------------------------------------------------------------------
 
-### Why This Matters
+## Why This Matters
 
 This dashboard explores food access issues in Georgia, especially how being far from grocery stores and not having reliable transportation can make it harder for people to get healthy food. The goal is to help show where communities may need more support, so local leaders and public health programs can better respond.
