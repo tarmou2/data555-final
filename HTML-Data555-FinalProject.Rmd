@@ -1,0 +1,135 @@
+---
+title: 'Final Project: Food Insecurity in Georgia'
+author: "Tania Armour"
+date: "April 25,2025"
+output:
+  html_document:
+    df_print: paged
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(shiny)
+library(plotly)
+library(tidyverse)
+library(leaflet)
+library(DT)
+
+data <- data.frame(
+  County = c("Fulton", "DeKalb", "Clayton", "Gwinnett", "Cobb", 
+             "Chatham", "Richmond", "Bibb", "Dougherty", "Hancock", 
+             "Fayette", "Terrell", "Randolph", "Calhoun", "Henry", 
+             "Douglas", "Muscogee", "Forsyth", "Cherokee", "Columbia"),
+
+  Food_Insecurity_Rate = c(18.2, 16.5, 19.3, 12.7, 10.5, 
+                           20.1, 17.4, 19.8, 21.3, 22.5, 
+                           15.6, 23.1, 24.7, 16.9, 14.8, 
+                           18.9, 19.2, 8.9, 9.6, 10.2),
+
+  Supermarket_Distance = c(2.1, 1.8, 2.4, 1.5, 1.3, 
+                           2.7, 3.1, 2.9, 3.5, 3.8, 
+                           1.9, 4.2, 4.5, 2.3, 1.6, 
+                           2.8, 3.0, 1.1, 1.4, 1.2),
+
+  Vehicle_Access = c(78, 85, 72, 90, 88, 
+                     70, 65, 68, 60, 55, 
+                     82, 58, 54, 80, 86, 
+                     75, 73, 94, 91, 93),
+
+  Latitude = c(33.749, 33.774, 33.557, 34.002, 33.899, 
+               32.083, 33.470, 32.806, 31.578, 33.287, 
+               33.448, 31.777, 31.777, 31.525, 33.451, 
+               33.751, 32.464, 34.207, 34.232, 33.552),
+
+  Longitude = c(-84.388, -84.296, -84.353, -84.033, -84.564, 
+                -81.099, -81.987, -83.697, -84.176, -82.997, 
+                -84.454, -84.440, -84.803, -84.524, -84.155, 
+                -84.660, -84.992, -84.144, -84.493, -82.105)
+)
+```
+
+Input {.sidebar}
+-----------------------------------------------------------------------
+
+### Select County
+
+```{r}
+selectInput("selected_county", "Choose a county:", 
+            choices = unique(data$County), 
+            selected = "Fulton")
+```
+
+Column {data-width=750}
+-----------------------------------------------------------------------
+
+### Food Insecurity vs. Supermarket Distance
+
+```{r}
+renderPlotly({
+  filtered <- data[data$County == input$selected_county, ]
+
+  plot_ly(
+    filtered,
+    x = ~Supermarket_Distance,
+    y = ~Food_Insecurity_Rate,
+    text = ~County,
+    type = "scatter",
+    mode = "markers",
+    marker = list(size = 10, color = ~Vehicle_Access, colorscale = "Viridis"),
+    hoverinfo = "text+x+y"
+  ) %>%
+    layout(
+      xaxis = list(title = "Supermarket Distance (miles)"),
+      yaxis = list(title = "Food Insecurity Rate (%)")
+    )
+})
+```
+
+### Scatterplot Key Takeaways
+
+The scatterplot shows that counties farther from supermarkets often have higher food insecurity rates. This suggests a link between limited food access and increased food insecurity, with a general trend showing that longer distances may worsen food challenges in communities.
+
+
+Column {data-width=850}
+-----------------------------------------------------------------------
+
+### Food Access Map
+
+```{r}
+renderLeaflet({
+  leaflet(data) %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+      lat = ~Latitude, 
+      lng = ~Longitude, 
+      radius = ~Food_Insecurity_Rate / 2,
+      color = "violet",
+      popup = ~paste(County, "-", Food_Insecurity_Rate, "% food insecurity,", Supermarket_Distance, "miles to supermarket")
+    )
+})
+```
+
+### Map Key Takeaways
+
+The map shows food insecurity levels and supermarket distance for all selected Georgia counties. Each dot represents a county, making it easy to compare which areas are more affected by food access challenges. The map helps us see geographic patterns that might not be obvious from the table or chart alone.
+
+Data Source {.tabset}
+-----------------------------------------------------------------------
+
+### About the Data
+
+This dashboard uses data from the [USDA Food Access Research Atlas](https://www.ers.usda.gov/data-products/food-access-research-atlas/), which covers approximately 72,000 U.S. census tracts. The data was collected by the USDA in collaboration with the U.S. Census Bureau and the Department of Transportation. It includes indicators such as distance to supermarkets, vehicle access, food insecurity rates, income levels, and race/ethnicity. The dataset focuses on U.S. residents living in census tracts and is used to identify areas with limited access to healthy food. The data used for this project was last updated in 2019.
+
+Real-World Impact {.tabset}
+-----------------------------------------------------------------------
+
+### Why This Matters
+
+This dashboard explores food access issues in Georgia, especially how being far from grocery stores and not having reliable transportation can make it harder for people to get healthy food. The goal is to help show where communities may need more support, so local leaders and public health programs can better respond.
+
+View The Code Here: [GitHub Repository](https://github.com/tarmou2/data555-final)
+
