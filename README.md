@@ -14,7 +14,7 @@ This dashboard shows how distance to grocery stores and lack of transportation a
 - Table and dropdown to explore counties seperately 
 
 ## About the Data  
-The counties in this dashboard were selected to reflect a diverse mix of urban, suburban, and rural regions across Georgia. I intentionally included both predominantly Black and predominantly White counties to highlight racial and geographic disparities in food access. This variety helps show how race, location, and transportation all influence food insecurity.
+The counties in this dashboard were selected to reflect a diverse mix of urban, suburban, and rural regions across Georgia. I purposefully included both predominantly Black and predominantly White counties to highlight racial and geographic disparities in food access. This will help show how race, location, and transportation all influence food insecurity.
 
 ## Data Source  
 - USDA Food Access Research Atlas  
