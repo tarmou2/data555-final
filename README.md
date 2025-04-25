@@ -6,7 +6,7 @@ This dashboard was created for my final project in Data 555. It explores how foo
 This dashboard shows how distance to grocery stores and lack of transportation affect food access in Georgia. It helps highlight which communities may need more support to reduce food insecurity.
 
 ## Link to Dashboard  
-[Final Project 2025 Dashboard]([http://6df8ky-tania-armour.shinyapps.io/FoodInsecurityDashboard])
+[Final Project 2025 Dashboard](https://6df8ky-tania-armour.shinyapps.io/FoodInsecurityDashboard/)
 
 ## Dashboard Widgets/Features  
 - Interactive map showing food insecurity rates by county  
